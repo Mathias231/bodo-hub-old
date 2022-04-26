@@ -19,6 +19,20 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         // Weather next hour
         $("#tempNextHour").html("Temperaturen neste time: " + weatherNextHour.air_temperature.toFixed(0) + " °C");
         $("#windNextHour").html("Vindhastigheten neste time: " + weatherNextHour.wind_speed.toFixed(1) + " m/s");
+
+    
+        // Weather description
+        var weatherIcon = data.properties.timeseries[1].data.next_1_hours.summary.symbol_code;
+        console.log(weatherIcon);
+
+        $.getJSON("https://api.met.no/weatherapi/weathericon/2.0/legends/", function(iconData){
+
+            var weatherIcon = data.properties.timeseries[1].data.next_1_hours.summary.symbol_code;
+            console.log(iconData);
+
+            $("#weatherIcon").attr("src", iconData);
+        })
+        
     });
 });
 
