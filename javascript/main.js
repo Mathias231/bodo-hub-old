@@ -25,11 +25,8 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         var weatherIcon = data.properties.timeseries[1].data.next_1_hours.summary.symbol_code;
         console.log(weatherIcon);
 
-        $.getJSON("https://api.met.no/weatherapi/weathericon/2.0/legends/", function(iconData){
-
-            var weatherIcon = data.properties.timeseries[1].data.next_1_hours.summary.symbol_code;
+        $.getJSON("https://api.met.no/weatherapi/weathericon/2.0/legends", function(iconData){
             console.log(iconData);
-
             $("#weatherIcon").attr("src", iconData);
         })
         
