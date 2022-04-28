@@ -4,7 +4,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
 
     // Current weather
     var currentWeatherData = data.properties.timeseries[2].data.instant.details;
-    // console.log(currentWeatherData);
+    console.log(currentWeatherData);
     
     // Weather next hour
     var weatherNextHour = data.properties.timeseries[3].data.instant.details;
@@ -14,10 +14,21 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     $(document).ready(function(){
         // Current weather
         $("#tempNow").html("Temperaturen nå: " + currentWeatherData.air_temperature.toFixed(0) + " °C");
+        if(currentWeatherData.air_temperature >= 0){
+            $("#tempNow").css("color", "red");
+        } else{
+            $("#tempNow").css("color", "blue");
+        }
+        
         $("#windNow").html("Vindhastigheten nå: " + currentWeatherData.wind_speed.toFixed(1) + " m/s");
 
         // Weather next hour
         $("#tempNextHour").html("Temperaturen neste time: " + weatherNextHour.air_temperature.toFixed(0) + " °C");
+        if(weatherNextHour.air_temperature >= 0){
+            $("#tempNextHour").css("color", "red");
+        } else{
+            $("#tempNextHour").css("color", "blue");
+        }
         $("#windNextHour").html("Vindhastigheten neste time: " + weatherNextHour.wind_speed.toFixed(1) + " m/s");
 
     
