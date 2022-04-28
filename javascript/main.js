@@ -2,9 +2,18 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     //Console log all data
     console.log(data);
 
+    // Data last updated
+    var lastUpdated = data.properties.meta.updated_at;
+    // Substring to get the time
+    var lastUpdatedClockTime = lastUpdated.substring(11, 16);
+    // Append the time to the html
+    $("#lastUpdated").append(lastUpdatedClockTime);
+    $("#lastUpdated2").append(lastUpdatedClockTime);
+    // console.log(lastUpdatedClockTime);
+
     // Current weather
     var currentWeatherData = data.properties.timeseries[2].data.instant.details;
-    console.log(currentWeatherData);
+    //console.log(currentWeatherData);
     
     // Weather next hour
     var weatherNextHour = data.properties.timeseries[3].data.instant.details;
