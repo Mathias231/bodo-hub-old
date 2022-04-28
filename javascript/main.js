@@ -25,6 +25,9 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         var weatherIcon = data.properties.timeseries[1].data.next_1_hours.summary.symbol_code;
         console.log(weatherIcon);
 
+        var svgPath = "../svg/" + weatherIcon + ".svg";
+        
+        $("#weatherIcon").attr("src", svgPath);
     });
 });
 
