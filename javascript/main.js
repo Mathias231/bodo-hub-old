@@ -3,7 +3,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     console.log(data);
 
     // Data last updated
-    var lastUpdated = data.properties.meta.updated_at;
+    var lastUpdated = data.properties.timeseries[2].time;
     // Substring to get the time
     var lastUpdatedClockTime = lastUpdated.substring(11, 16);
     // Append the time to the html
