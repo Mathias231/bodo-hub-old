@@ -20,6 +20,35 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     // console.log(weatherNextHour);
 
 
+
+
+    // Max min temperature day
+    var allTime = [];
+    // Loop through all timeseries
+    for(var i = 0; i < data.properties.timeseries.length; i++){
+        // Get the time
+        var time = data.properties.timeseries[i].time;
+        var yyymmdd = data.properties.timeseries[i].time.substring(0, 10);
+
+        // Get the temperature
+        var temperature = data.properties.timeseries[i].data.instant.details.air_temperature;
+        // Create an object with the time and temperature
+
+        var timeOjbect = {
+            time: time,
+            yyymmdd: yyymmdd,
+            temperature: temperature
+        };
+        // Push the object to the arrayd
+        allTime.push(timeOjbect);
+    }
+    // console.log(allTime);
+
+
+
+
+
+
     $(document).ready(function(){
         // Current weather
         $("#tempNow").html("Temperaturen nå: " + currentWeatherData.air_temperature.toFixed(0) + " °C");
