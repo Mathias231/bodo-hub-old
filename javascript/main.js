@@ -59,7 +59,26 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         $("#weatherIconNextHour").attr("src", svgPath);
 
 
-        
+
+        // // Linechart for temperature with date and time every 2 hours
+        // var lineChartData = [];
+        // // Loop through all timeseries
+        // for(var i = 0; i < 24; i++){
+        //     // Get the time
+        //     var time = data.properties.timeseries[i].time;
+        //     // Get the temperature
+        //     var temperature = data.properties.timeseries[i].data.instant.details.air_temperature;
+        //     // Create an object with the time and temperature
+        //     var lineChartObject = {
+        //         time: time,
+        //         temperature: temperature
+        //     };
+        //     // Push the object to the array
+        //     lineChartData.push(lineChartObject);
+        // }
+        // console.log(lineChartData);
+
+
 
     });
 });
