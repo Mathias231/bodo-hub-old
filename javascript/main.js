@@ -57,10 +57,5 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         var svgPath = "../svg/" + weatherIconNextHour + ".svg";
         // Set weather icon
         $("#weatherIconNextHour").attr("src", svgPath);
-        
-        
-    });
+
 });
-
-
-// 2 is current time
