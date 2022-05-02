@@ -43,51 +43,36 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     }
     // console.log(allTime);
 
-
-    // data for today
-    if(allTime[2].yyymmdd == allTime[2].yyymmdd){
-        // select only datasets from 
-        var dataToday = allTime.filter(function(item){
-            return item.yyymmdd == allTime[2].yyymmdd;
-        });
+    // Get all data for put/set day
+    var dataDate = (d) => {
+        if(allTime[d].yyymmdd == allTime[d].yyymmdd){
+            var date = allTime.filter(function(item){
+                return item.yyymmdd == allTime[d].yyymmdd;
+            })
+            return date
+        }
     }
-    // console.log(dataToday);
 
-    // data for tomorrow
-    if(allTime[17].yyymmdd == allTime[17].yyymmdd){
-        // select only datasets from
-        var dataTomorrow = allTime.filter(function(item){
-            return item.yyymmdd == allTime[17].yyymmdd;
-        });
+    // Get maxTemp and minTemp for put/set day
+    var maxMin = (d) => {
+        var maxTemp = Math.max.apply(Math, dataDate(d).map(function(o){return o.temperature.toFixed(0)}));
+        var minTemp = Math.min.apply(Math, dataDate(d).map(function(o){return o.temperature.toFixed(0)}));
+        return [maxTemp, minTemp];
     }
-    console.log(dataTomorrow);
-    
-    // Data for today
-    // max temperature
-    var maxTemp = Math.max.apply(Math, dataToday.map(function(o){return o.temperature.toFixed(0);}));
-    // console.log(maxTemp);
-    // min temperature
-    var minTemp = Math.min.apply(Math, dataToday.map(function(o){return o.temperature.toFixed(0);}));
-    // console.log(minTemp);
-    // average temperature
-    var avgTemp = dataToday.reduce(function(a, b) { return a + b.temperature; }, 0) / dataToday.length;
-    // console.log(avgTemp);
+
+
+    // var avgTemp = dataDate(2).reduce((a, b) => a + b.temperature, 0) / dataDate(2).length;
+    //console.log(avgTemp);
     // wind speed
-    var windSpeed = dataToday.reduce(function(a, b) { return a + b.wind; }, 0) / dataToday.length;
+    var windSpeed = dataDate(2).reduce((a, b) => a + b.wind, 0) / dataDate(2).length;
     // console.log(windSpeed);
     
     // Data for tomorrow
-    // max temperature
-    var maxTempTomorrow = Math.max.apply(Math, dataTomorrow.map(function(o){return o.temperature.toFixed(0);}));
-    //console.log(maxTempTomorrow);
-    // min temperature
-    var minTempTomorrow = Math.min.apply(Math, dataTomorrow.map(function(o){return o.temperature.toFixed(0);}));
-    // console.log(minTempTomorrow);
     // average temperature
-    var avgTempTomorrow = dataTomorrow.reduce(function(a, b) { return a + b.temperature; }, 0) / dataTomorrow.length;
+    // var avgTempTomorrow = dataDate(17).reduce((a, b) => a + b.temperature, 0) / dataDate(17).length;
     // console.log(avgTempTomorrow);
     // wind speed
-    var windSpeedTomorrow = dataTomorrow.reduce(function(a, b) { return a + b.wind; }, 0) / dataTomorrow.length;
+    var windSpeedTomorrow = dataDate(17).reduce((a, b) => a + b.wind, 0) / dataDate(17).length;
     // console.log(windSpeedTomorrow);
 
 
@@ -134,9 +119,8 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         var weatherIconTomorrow = data.properties.timeseries[17].data.next_1_hours.summary.symbol_code;
         // Set path to weather icon
         var svgPathTomorrow = "../svg/" + weatherIconTomorrow + ".svg";
-        
+              
 
-        
         $('#table').bootstrapTable({
             locale: 'en-US',
             columns: [{
@@ -154,12 +138,12 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
               }],
             data: [{
               date: 'I dag ' + data.properties.timeseries[2].time.substring(9, 10) + '. Mai',
-              maxMin: maxTemp + "° / " + minTemp + "°",
+              maxMin: maxMin(2)[0] + "° / " + maxMin(2)[1] + "°",
               windMax: windSpeed.toFixed(1) + " m/s",
               weatherIcon: "<img src='../svg/" + weatherIconCurrent + ".svg' height='50' width='50'></img>"
             }, {
               date: 'I morgen ' + data.properties.timeseries[17].time.substring(9, 10) + '. Mai',
-              maxMin: maxTempTomorrow + "° / " + minTempTomorrow + "°",
+              maxMin: maxMin(17)[0] + "° / " + maxMin(17)[1] + "°",
               windMax: windSpeedTomorrow.toFixed(1) + " m/s",
               weatherIcon: "<img src='" + svgPathTomorrow + "' height='50' width='50'></img>"
             }]
