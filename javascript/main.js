@@ -19,17 +19,13 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     var weatherNextHour = data.properties.timeseries[3].data.instant.details;
     // console.log(weatherNextHour);
 
-
-
-
-    // Max min temperature day
+    // Loop through the data and make an object with the data
     var allTime = [];
     // Loop through all timeseries
     for(var i = 0; i < data.properties.timeseries.length; i++){
         // Get the time
         var time = data.properties.timeseries[i].time;
         var yyymmdd = data.properties.timeseries[i].time.substring(0, 10);
-
         // Get the temperature
         var temperature = data.properties.timeseries[i].data.instant.details.air_temperature;
         // Create an object with the time and temperature
@@ -44,6 +40,25 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     }
     // console.log(allTime);
 
+    if(allTime[2].yyymmdd == allTime[2].yyymmdd){
+        // select only datasets from 
+        var dataToday = allTime.filter(function(item){
+            return item.yyymmdd == allTime[2].yyymmdd;
+        });
+    }
+    // console.log(dataToday);
+    
+    // max temperature
+    var maxTemp = Math.max.apply(Math, dataToday.map(function(o){return o.temperature.toFixed(0);}));
+    console.log(maxTemp);
+    // min temperature
+    var minTemp = Math.min.apply(Math, dataToday.map(function(o){return o.temperature.toFixed(0);}));
+    console.log(minTemp);
+    // average temperature
+    var avgTemp = dataToday.reduce(function(a, b) { return a + b.temperature; }, 0) / dataToday.length;
+    console.log(avgTemp);
+    
+    $("#maxMin").append(maxTemp + "° / " + minTemp + "°");
 
 
 
