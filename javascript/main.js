@@ -28,17 +28,20 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         var yyymmdd = data.properties.timeseries[i].time.substring(0, 10);
         // Get the temperature
         var temperature = data.properties.timeseries[i].data.instant.details.air_temperature;
+        var wind = data.properties.timeseries[i].data.instant.details.wind_speed;
+        
         // Create an object with the time and temperature
-
         var timeOjbect = {
             time: time,
             yyymmdd: yyymmdd,
-            temperature: temperature
+            temperature: temperature,
+            wind: wind
         };
         // Push the object to the arrayd
         allTime.push(timeOjbect);
     }
-    // console.log(allTime);
+    console.log(allTime);
+
 
     // data for today
     if(allTime[2].yyymmdd == allTime[2].yyymmdd){
@@ -47,7 +50,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
             return item.yyymmdd == allTime[2].yyymmdd;
         });
     }
-    // console.log(dataToday);
+    console.log(dataToday);
 
     // data for tomorrow
     if(allTime[17].yyymmdd == allTime[17].yyymmdd){
@@ -56,7 +59,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
             return item.yyymmdd == allTime[17].yyymmdd;
         });
     }
-     console.log(dataTomorrow);
+    //console.log(dataTomorrow);
     
     // Data for today
     // max temperature
@@ -68,26 +71,25 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     // average temperature
     var avgTemp = dataToday.reduce(function(a, b) { return a + b.temperature; }, 0) / dataToday.length;
     // console.log(avgTemp);
+    // wind speed
+    var windSpeed = dataToday.reduce(function(a, b) { return a + b.wind; }, 0) / dataToday.length;
+    // console.log(windSpeed);
     
     // Data for tomorrow
     // max temperature
     var maxTempTomorrow = Math.max.apply(Math, dataTomorrow.map(function(o){return o.temperature.toFixed(0);}));
-    console.log(maxTempTomorrow);
+    //console.log(maxTempTomorrow);
     // min temperature
     var minTempTomorrow = Math.min.apply(Math, dataTomorrow.map(function(o){return o.temperature.toFixed(0);}));
     // console.log(minTempTomorrow);
     // average temperature
     var avgTempTomorrow = dataTomorrow.reduce(function(a, b) { return a + b.temperature; }, 0) / dataTomorrow.length;
     // console.log(avgTempTomorrow);
+    // wind speed
+    var windSpeedTomorrow = dataTomorrow.reduce(function(a, b) { return a + b.wind; }, 0) / dataTomorrow.length;
+    // console.log(windSpeedTomorrow);
 
 
-
-    // Output
-    // Today
-    $("#maxMinToday").append(maxTemp + "° / " + minTemp + "°");
-
-    // Tomorrow
-    $("#maxMinTomorrow").append(maxTempTomorrow + "° / " + minTempTomorrow + "°");
 
 
     $(document).ready(function(){
@@ -127,6 +129,19 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         var svgPath = "../svg/" + weatherIconNextHour + ".svg";
         // Set weather icon
         $("#weatherIconNextHour").attr("src", svgPath);
+
+
+        // Output for table
+        // Today
+        $("#maxMinToday").append(maxTemp + "° / " + minTemp + "°");
+        $("#weatherIconToday").attr("src", svgPath);
+        $("#windMaxToday").append(windSpeed.toFixed(1) + " m/s");
+        
+        // Tomorrow
+        $("#maxMinTomorrow").append(maxTempTomorrow + "° / " + minTempTomorrow + "°");
+        $("#windMaxTomorrow").append(windSpeedTomorrow.toFixed(1) + " m/s");
+
+
 
 
 
