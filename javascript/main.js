@@ -118,11 +118,11 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         // Grabbing weather symbol from timeseries[1] (wich is the previous hour) and uses it's "next_1_hours" to get the weather icon
         var weatherIconCurrent = data.properties.timeseries[1].data.next_1_hours.summary.symbol_code;
         // Set path to weather icon
-        var svgPath = "../svg/" + weatherIconCurrent + ".svg";
+        var svgPathCurrent = "../svg/" + weatherIconCurrent + ".svg";
         // Set weather icon
-        $("#weatherIcon").attr("src", svgPath);
+        $("#weatherIcon").attr("src", svgPathCurrent);
         //console.log(weatherIconCurrent);
-
+        
         // Weather description
         // Grabbing weather symbol from timeseries[2] and uses it's "next_1_hours" to get the weather icon to predict the weather for the next hour
         var weatherIconNextHour = data.properties.timeseries[2].data.next_1_hours.summary.symbol_code;
@@ -131,7 +131,9 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         // Set weather icon
         $("#weatherIconNextHour").attr("src", svgPathNextHour);
 
-
+        var weatherIconTomorrow = data.properties.timeseries[17].data.next_1_hours.summary.symbol_code;
+        // Set path to weather icon
+        var svgPathTomorrow = "../svg/" + weatherIconTomorrow + ".svg";
         
 
 
@@ -155,12 +157,12 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
               date: 'I dag ' + data.properties.timeseries[2].time.substring(9, 10) + '. Mai',
               maxMin: maxTemp + "° / " + minTemp + "°",
               windMax: windSpeed.toFixed(1) + " m/s",
-              weatherIcon: data.properties.timeseries[2].data.next_1_hours.summary.symbol_code
+              weatherIcon: "<img src='../svg/" + weatherIconCurrent + ".svg' height='50' width='50'></img>"
             }, {
               date: 'I morgen ' + data.properties.timeseries[17].time.substring(9, 10) + '. Mai',
               maxMin: maxTempTomorrow + "° / " + minTempTomorrow + "°",
               windMax: windSpeedTomorrow.toFixed(1) + " m/s",
-              weatherIcon: data.properties.timeseries[17].data.next_1_hours.summary.symbol_code
+              weatherIcon: "<img src='../svg/" + weatherIconTomorrow + ".svg' height='50' width='50'></img>"
             }]
           })
 
