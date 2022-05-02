@@ -127,19 +127,14 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         // Grabbing weather symbol from timeseries[2] and uses it's "next_1_hours" to get the weather icon to predict the weather for the next hour
         var weatherIconNextHour = data.properties.timeseries[2].data.next_1_hours.summary.symbol_code;
         // Set path to weather icon
-        var svgPath = "../svg/" + weatherIconNextHour + ".svg";
+        var svgPathNextHour = "../svg/" + weatherIconNextHour + ".svg";
         // Set weather icon
-        $("#weatherIconNextHour").attr("src", svgPath);
+        $("#weatherIconNextHour").attr("src", svgPathNextHour);
 
 
-        // Output for table
-        // Today
-        $("#maxMinToday").append(maxTemp + "° / " + minTemp + "°");
-        $("#windMaxToday").append(windSpeed.toFixed(1) + " m/s");
         
-        // Tomorrow
-        $("#maxMinTomorrow").append(maxTempTomorrow + "° / " + minTempTomorrow + "°");
-        $("#windMaxTomorrow").append(windSpeedTomorrow.toFixed(1) + " m/s");
+
+
 
 
         $('#table').bootstrapTable({
@@ -165,7 +160,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
               date: 'I morgen ' + data.properties.timeseries[17].time.substring(9, 10) + '. Mai',
               maxMin: maxTempTomorrow + "° / " + minTempTomorrow + "°",
               windMax: windSpeedTomorrow.toFixed(1) + " m/s",
-              weatherIcon: "<img id='weatherToday' height='50' width='50'></img>"
+              weatherIcon: data.properties.timeseries[17].data.next_1_hours.summary.symbol_code
             }]
           })
 
