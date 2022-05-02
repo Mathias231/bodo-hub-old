@@ -6,6 +6,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     var lastUpdated = data.properties.timeseries[2].time;
     // Substring to get the time
     var lastUpdatedClockTime = lastUpdated.substring(11, 16);
+    
     // Append the time to the html
     $("#lastUpdated").append(lastUpdatedClockTime);
     $("#lastUpdated2").append(lastUpdatedClockTime);
@@ -141,24 +142,33 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         $("#windMaxTomorrow").append(windSpeedTomorrow.toFixed(1) + " m/s");
 
 
+        $('#table').bootstrapTable({
+            columns: [{
+              field: 'date',
+              title: 'Dager'
+            }, {
+              field: 'maxMin',
+              title: 'Maks/min. Temp'
+            }, {
+              field: 'windMax',
+              title: 'Vindstyrke'
+            }, {
+                field: 'weatherIcon',
+                title: 'Vær ikon'
+              }],
+            data: [{
+              date: 'I dag ' + data.properties.timeseries[2].time.substring(9, 10) + '. Mai',
+              maxMin: maxTemp + "° / " + minTemp + "°",
+              windMax: windSpeed.toFixed(1) + " m/s",
+              weatherIcon: data.properties.timeseries[2].data.next_1_hours.summary.symbol_code
+            }, {
+              date: 'I morgen ' + data.properties.timeseries[17].time.substring(9, 10) + '. Mai',
+              maxMin: maxTempTomorrow + "° / " + minTempTomorrow + "°",
+              windMax: windSpeedTomorrow.toFixed(1) + " m/s",
+              weatherIcon: data.properties.timeseries[2].data.next_1_hours.summary.symbol_code
+            }]
+          })
 
-        // // Linechart for temperature with date and time every 2 hours
-        // var lineChartData = [];
-        // // Loop through all timeseries
-        // for(var i = 0; i < 24; i++){
-        //     // Get the time
-        //     var time = data.properties.timeseries[i].time;
-        //     // Get the temperature
-        //     var temperature = data.properties.timeseries[i].data.instant.details.air_temperature;
-        //     // Create an object with the time and temperature
-        //     var lineChartObject = {
-        //         time: time,
-        //         temperature: temperature
-        //     };
-        //     // Push the object to the array
-        //     lineChartData.push(lineChartObject);
-        // }
-        // console.log(lineChartData);
 
 
 

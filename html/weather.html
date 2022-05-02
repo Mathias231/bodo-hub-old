@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.0/dist/bootstrap-table.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <title>Document</title>
 </head>
@@ -50,37 +51,25 @@
     </div>
   </div>
 
-  <!-- Table -->
-  <table class="table mt-5">
-    <thead>
-      <tr>
-        <th scope="col">Dato</th>
-        <th scope="col">Maks/min temp</th>
-        <th scope="col">Ikon</th>
-        <th scope="col">Vind(Maks)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row" id="dateToday">i dag</th>
-        <td id="maxMinToday"></td>
-        <td></td>
-        <td id="windMaxToday"></td>
-      </tr>
-      <tr>
-        <th scope="row" id="dateTomorrow">i morgen</th>
-        <td id="maxMinTomorrow"></td>
-        <td></td>
-        <td id="windMaxTomorrow"></td>
-      </tr>
-    </tbody>
-  </table>
+
+  <table
+    id="table"
+    data-pagination="true"
+    data-search="true"
+    data-advanced-search="true"
+    data-id-table="advancedTable"
+  >
+  <thead>
+    <tr>
+    </tr>
+  </thead>
+</table>
   
-  <!-- Line chart -->
-  <div id="lineChart" class="mt-5" style="height: 300px; width: 100%;"></div>
 </body>
   <!-- script link jquert 3.6.0-->
   <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/bootstrap-table@1.20.0/dist/bootstrap-table.min.js"></script>
+  <script src="https://unpkg.com/bootstrap-table@1.20.0/dist/locale/bootstrap-table-zh-CN.min.js"></script>
   <script src="../javascript/main.js"></script>
 </html>
