@@ -60,6 +60,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         return [maxTemp, minTemp];
     }
 
+    
 
     // var avgTemp = dataDate(2).reduce((a, b) => a + b.temperature, 0) / dataDate(2).length;
     //console.log(avgTemp);
