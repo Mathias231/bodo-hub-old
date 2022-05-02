@@ -59,7 +59,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
             return item.yyymmdd == allTime[17].yyymmdd;
         });
     }
-    //console.log(dataTomorrow);
+    console.log(dataTomorrow);
     
     // Data for today
     // max temperature
@@ -134,14 +134,11 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         // Output for table
         // Today
         $("#maxMinToday").append(maxTemp + "° / " + minTemp + "°");
-        $("#weatherIconToday").attr("src", svgPath);
         $("#windMaxToday").append(windSpeed.toFixed(1) + " m/s");
         
         // Tomorrow
         $("#maxMinTomorrow").append(maxTempTomorrow + "° / " + minTempTomorrow + "°");
         $("#windMaxTomorrow").append(windSpeedTomorrow.toFixed(1) + " m/s");
-
-
 
 
 
