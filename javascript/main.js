@@ -40,6 +40,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     }
     // console.log(allTime);
 
+    // data for today
     if(allTime[2].yyymmdd == allTime[2].yyymmdd){
         // select only datasets from 
         var dataToday = allTime.filter(function(item){
@@ -47,21 +48,46 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         });
     }
     // console.log(dataToday);
+
+    // data for tomorrow
+    if(allTime[17].yyymmdd == allTime[17].yyymmdd){
+        // select only datasets from
+        var dataTomorrow = allTime.filter(function(item){
+            return item.yyymmdd == allTime[17].yyymmdd;
+        });
+    }
+     console.log(dataTomorrow);
     
+    // Data for today
     // max temperature
     var maxTemp = Math.max.apply(Math, dataToday.map(function(o){return o.temperature.toFixed(0);}));
-    console.log(maxTemp);
+    // console.log(maxTemp);
     // min temperature
     var minTemp = Math.min.apply(Math, dataToday.map(function(o){return o.temperature.toFixed(0);}));
-    console.log(minTemp);
+    // console.log(minTemp);
     // average temperature
     var avgTemp = dataToday.reduce(function(a, b) { return a + b.temperature; }, 0) / dataToday.length;
-    console.log(avgTemp);
+    // console.log(avgTemp);
     
-    $("#maxMin").append(maxTemp + "° / " + minTemp + "°");
+    // Data for tomorrow
+    // max temperature
+    var maxTempTomorrow = Math.max.apply(Math, dataTomorrow.map(function(o){return o.temperature.toFixed(0);}));
+    console.log(maxTempTomorrow);
+    // min temperature
+    var minTempTomorrow = Math.min.apply(Math, dataTomorrow.map(function(o){return o.temperature.toFixed(0);}));
+    // console.log(minTempTomorrow);
+    // average temperature
+    var avgTempTomorrow = dataTomorrow.reduce(function(a, b) { return a + b.temperature; }, 0) / dataTomorrow.length;
+    // console.log(avgTempTomorrow);
 
 
 
+    // Output
+    // Today
+    $("#maxMinToday").append(maxTemp + "° / " + minTemp + "°");
+
+    // Tomorrow
+    $("#maxMinTomorrow").append(maxTempTomorrow + "° / " + minTempTomorrow + "°");
 
 
     $(document).ready(function(){
