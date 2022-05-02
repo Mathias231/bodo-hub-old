@@ -40,7 +40,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         // Push the object to the arrayd
         allTime.push(timeOjbect);
     }
-    console.log(allTime);
+    // console.log(allTime);
 
 
     // data for today
@@ -50,7 +50,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
             return item.yyymmdd == allTime[2].yyymmdd;
         });
     }
-    console.log(dataToday);
+    // console.log(dataToday);
 
     // data for tomorrow
     if(allTime[17].yyymmdd == allTime[17].yyymmdd){
