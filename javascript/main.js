@@ -136,10 +136,9 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         var svgPathTomorrow = "../svg/" + weatherIconTomorrow + ".svg";
         
 
-
-
-
+        
         $('#table').bootstrapTable({
+            locale: 'en-US',
             columns: [{
               field: 'date',
               title: 'Dager'
@@ -162,12 +161,9 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
               date: 'I morgen ' + data.properties.timeseries[17].time.substring(9, 10) + '. Mai',
               maxMin: maxTempTomorrow + "° / " + minTempTomorrow + "°",
               windMax: windSpeedTomorrow.toFixed(1) + " m/s",
-              weatherIcon: "<img src='../svg/" + weatherIconTomorrow + ".svg' height='50' width='50'></img>"
+              weatherIcon: "<img src='" + svgPathTomorrow + "' height='50' width='50'></img>"
             }]
           })
-
-
-
 
     });
 });
