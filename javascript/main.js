@@ -60,24 +60,8 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         return [maxTemp, minTemp];
     }
 
-    
-
-    // var avgTemp = dataDate(2).reduce((a, b) => a + b.temperature, 0) / dataDate(2).length;
-    //console.log(avgTemp);
-    // wind speed
     var windSpeed = dataDate(2).reduce((a, b) => a + b.wind, 0) / dataDate(2).length;
-    // console.log(windSpeed);
-    
-    // Data for tomorrow
-    // average temperature
-    // var avgTempTomorrow = dataDate(17).reduce((a, b) => a + b.temperature, 0) / dataDate(17).length;
-    // console.log(avgTempTomorrow);
-    // wind speed
     var windSpeedTomorrow = dataDate(17).reduce((a, b) => a + b.wind, 0) / dataDate(17).length;
-    // console.log(windSpeedTomorrow);
-
-
-
 
     $(document).ready(function(){
         // Current weather
