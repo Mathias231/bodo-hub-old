@@ -11,7 +11,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     // 17 = First data/entry for tomorrow's data (aka tomorrow)
     var dataTomorrow = 17
 
-    
+
     // Data last updated
     var lastUpdated = data.properties.timeseries[2].time;
     // Substring to get the time
@@ -70,8 +70,12 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         return [maxTemp, minTemp];
     }
 
-    var windSpeed = dataDate(dataCurrent).reduce((a, b) => a + b.wind, 0) / dataDate(2).length;
-    var windSpeedTomorrow = dataDate(dataTomorrow).reduce((a, b) => a + b.wind, 0) / dataDate(17).length;
+    // Get maxWind for put/set day
+    var windDate = (d) => {
+      var windSpeed = dataDate(d).reduce((a, b) => a + b.wind, 0) / dataDate(d).length;
+      return windSpeed.toFixed(1);
+    }
+
 
     $(document).ready(function(){
         // Current weather
@@ -134,12 +138,12 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
             data: [{
               date: 'I dag ' + data.properties.timeseries[2].time.substring(9, 10) + '. Mai',
               maxMin: maxMin(dataCurrent)[0] + "° / " + maxMin(dataCurrent)[1] + "°",
-              windMax: windSpeed.toFixed(1) + " m/s",
+              windMax: windDate(dataCurrent) + " m/s",
               weatherIcon: "<img src='../svg/" + weatherIconCurrent + ".svg' height='50' width='50'></img>"
             }, {
               date: 'I morgen ' + data.properties.timeseries[17].time.substring(9, 10) + '. Mai',
               maxMin: maxMin(dataTomorrow)[0] + "° / " + maxMin(dataTomorrow)[1] + "°",
-              windMax: windSpeedTomorrow.toFixed(1) + " m/s",
+              windMax: windDate(dataTomorrow) + "° m/s",
               weatherIcon: "<img src='" + svgPathTomorrow + "' height='50' width='50'></img>"
             }]
           })
