@@ -43,7 +43,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         // Push the object to the arrayd
         allTime.push(timeOjbect);
     }
-    // console.log(allTime);
+     console.log(allTime);
 
     // Get all data for put/set day
     var dataDate = (d) => {
@@ -148,7 +148,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
               date: 'I dag ' + data.properties.timeseries[2].time.substring(9, 10) + '. Mai',
               maxMin: maxMin(dataCurrent)[0] + "° / " + maxMin(dataCurrent)[1] + "°",
               windMax: windDate(dataCurrent) + " m/s",
-              weatherIcon: "<img src='../svg/" + weatherIcon(1) + ".svg' height='50' width='50'></img>"
+              weatherIcon: "<img src='" + svgPathCurrent + "' height='50' width='50'></img>"
             }, {
               date: 'I morgen ' + data.properties.timeseries[17].time.substring(9, 10) + '. Mai',
               maxMin: maxMin(dataTomorrow)[0] + "° / " + maxMin(dataTomorrow)[1] + "°",
