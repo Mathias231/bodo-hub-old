@@ -1,7 +1,17 @@
 $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&lon=14.405&altitude=11", function(data){
-    //Console log all data
+    // Console log all data
     console.log(data);
 
+    // All data comes from the JSON object
+    // The current data is the second (2) element in the object properties: timeseries: 2
+    // I will now make a variable for (2) and use it to call functions further down.
+    // To change time/days, change the number.
+    // 2 = Today/right now
+    var dataCurrent = 2
+    // 17 = First data/entry for tomorrow's data (aka tomorrow)
+    var dataTomorrow = 17
+
+    
     // Data last updated
     var lastUpdated = data.properties.timeseries[2].time;
     // Substring to get the time
@@ -60,8 +70,8 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         return [maxTemp, minTemp];
     }
 
-    var windSpeed = dataDate(2).reduce((a, b) => a + b.wind, 0) / dataDate(2).length;
-    var windSpeedTomorrow = dataDate(17).reduce((a, b) => a + b.wind, 0) / dataDate(17).length;
+    var windSpeed = dataDate(dataCurrent).reduce((a, b) => a + b.wind, 0) / dataDate(2).length;
+    var windSpeedTomorrow = dataDate(dataTomorrow).reduce((a, b) => a + b.wind, 0) / dataDate(17).length;
 
     $(document).ready(function(){
         // Current weather
@@ -123,12 +133,12 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
               }],
             data: [{
               date: 'I dag ' + data.properties.timeseries[2].time.substring(9, 10) + '. Mai',
-              maxMin: maxMin(2)[0] + "° / " + maxMin(2)[1] + "°",
+              maxMin: maxMin(dataCurrent)[0] + "° / " + maxMin(dataCurrent)[1] + "°",
               windMax: windSpeed.toFixed(1) + " m/s",
               weatherIcon: "<img src='../svg/" + weatherIconCurrent + ".svg' height='50' width='50'></img>"
             }, {
               date: 'I morgen ' + data.properties.timeseries[17].time.substring(9, 10) + '. Mai',
-              maxMin: maxMin(17)[0] + "° / " + maxMin(17)[1] + "°",
+              maxMin: maxMin(dataTomorrow)[0] + "° / " + maxMin(dataTomorrow)[1] + "°",
               windMax: windSpeedTomorrow.toFixed(1) + " m/s",
               weatherIcon: "<img src='" + svgPathTomorrow + "' height='50' width='50'></img>"
             }]
