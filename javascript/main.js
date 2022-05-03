@@ -86,6 +86,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
             $("#tempNow").css("color", "blue");
         }
         
+        // Display current windspeed
         $("#windNow").html("Vindhastigheten nå: " + currentWeatherData.wind_speed.toFixed(1) + " m/s");
 
         // Weather next hour
@@ -95,6 +96,8 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         } else{
             $("#tempNextHour").css("color", "blue");
         }
+
+        // Display next hour windspeed
         $("#windNextHour").html("Vindhastigheten neste time: " + weatherNextHour.wind_speed.toFixed(1) + " m/s");
 
         // Get weatherIcon for put/set day
@@ -104,9 +107,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
           return icon;
         }
     
-        // Weather description for current weather
-        // Grabbing weather symbol from timeseries[1] (wich is the previous hour) and uses it's "next_1_hours" to get the weather icon
-        var weatherIconCurrent = data.properties.timeseries[1].data.next_1_hours.summary.symbol_code;
+
         // Set path to weather icon
         var svgPathCurrent = "../svg/" + weatherIcon(1) + ".svg";
         // Set weather icon
@@ -114,14 +115,14 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
 
         
         // Set path to weather icon
-        var svgPathNextHour = "../svg/" + weatherIconNextHour + ".svg";
+        var svgPathNextHour = "../svg/" + weatherIcon(2) + ".svg";
         // Set weather icon
         $("#weatherIconNextHour").attr("src", svgPathNextHour);
 
         var weatherIconTomorrow = data.properties.timeseries[17].data.next_1_hours.summary.symbol_code;
         // Set path to weather icon
-        var svgPathTomorrow = "../svg/" + weatherIconTomorrow + ".svg";
-              
+        var svgPathTomorrow = "../svg/" + weatherIcon(17) + ".svg";
+        
 
         $('#table').bootstrapTable({
             locale: 'en-US',
