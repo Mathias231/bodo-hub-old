@@ -22,14 +22,6 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     $("#lastUpdated2").append(lastUpdatedClockTime);
     // console.log(lastUpdatedClockTime);
 
-    // Current weather
-    var currentWeatherData = data.properties.timeseries[2].data.instant.details;
-    //console.log(currentWeatherData);
-    
-    // Weather next hour
-    var weatherNextHour = data.properties.timeseries[3].data.instant.details;
-    // console.log(weatherNextHour);
-
     // Loop through the data and make an object with the data
     var allTime = [];
     // Loop through all timeseries
@@ -63,6 +55,19 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         }
     }
 
+
+    // Get temperature for put/set day
+    // 2 is current temperature and 3 is for the next hour
+    var temp = (d) => {
+      var result = data.properties.timeseries[d].data.instant.details.air_temperature.toFixed(0);
+      return result;
+    }
+
+    var wind = (d) => {
+      var result = data.properties.timeseries[d].data.instant.details.wind_speed.toFixed(1);
+      return result;
+    }
+
     // Get maxTemp and minTemp for put/set day
     var maxMin = (d) => {
         var maxTemp = Math.max.apply(Math, dataDate(d).map(function(o){return o.temperature.toFixed(0)}));
@@ -79,26 +84,28 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
 
     $(document).ready(function(){
         // Current weather
-        $("#tempNow").html("Temperaturen nå: " + currentWeatherData.air_temperature.toFixed(0) + " °C");
-        if(currentWeatherData.air_temperature >= 0){
+        $("#tempNow").html("Temperaturen nå: " + temp(2) + " °C");
+        // If temperature is higher then 0, color text red
+        if(temp(2) >= 0){
             $("#tempNow").css("color", "red");
         } else{
             $("#tempNow").css("color", "blue");
         }
         
         // Display current windspeed
-        $("#windNow").html("Vindhastigheten nå: " + currentWeatherData.wind_speed.toFixed(1) + " m/s");
+        $("#windNow").html("Vindhastigheten nå: " + wind(2) + " m/s");
 
         // Weather next hour
-        $("#tempNextHour").html("Temperaturen neste time: " + weatherNextHour.air_temperature.toFixed(0) + " °C");
-        if(weatherNextHour.air_temperature >= 0){
+        $("#tempNextHour").html("Temperaturen neste time: " + temp(3) + " °C");
+        // If temperature is higher then 0, color text red
+        if(temp(2) >= 0){
             $("#tempNextHour").css("color", "red");
         } else{
             $("#tempNextHour").css("color", "blue");
         }
 
         // Display next hour windspeed
-        $("#windNextHour").html("Vindhastigheten neste time: " + weatherNextHour.wind_speed.toFixed(1) + " m/s");
+        $("#windNextHour").html("Vindhastigheten neste time: " + wind(3) + " m/s");
 
         // Get weatherIcon for put/set day
         // 1 has data for the weather 1 hour ago, so using it's icon as current icon will match the weather outside.
@@ -113,13 +120,11 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         // Set weather icon
         $("#weatherIcon").attr("src", svgPathCurrent);
 
-        
         // Set path to weather icon
         var svgPathNextHour = "../svg/" + weatherIcon(2) + ".svg";
         // Set weather icon
         $("#weatherIconNextHour").attr("src", svgPathNextHour);
 
-        var weatherIconTomorrow = data.properties.timeseries[17].data.next_1_hours.summary.symbol_code;
         // Set path to weather icon
         var svgPathTomorrow = "../svg/" + weatherIcon(17) + ".svg";
         
