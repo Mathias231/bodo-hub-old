@@ -1,6 +1,6 @@
 $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&lon=14.405&altitude=11", function(data){
     // Console log all data
-    // console.log(data);
+    console.log(data);
 
     // All data comes from the JSON object
     // The current data is the second (2) element in the object properties: timeseries: 2
@@ -43,7 +43,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         // Push the object to the arrayd
         allTime.push(timeOjbect);
     }
-     console.log(allTime);
+     // console.log(allTime);
 
     // Get all data for put/set day
     var dataDate = (d) => {
@@ -81,6 +81,38 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
       return windSpeed.toFixed(1);
     }
 
+    // Get weatherIcon for put/set day
+    // 1 has data for the weather 1 hour ago, so using it's icon as current icon will match the weather outside.
+    var weatherIcon = (d) => {
+      var icon = data.properties.timeseries[d].data.next_1_hours.summary.symbol_code;
+      return icon;
+    }
+
+    // A fucntion that seperates data from the current day and the next day
+    var separateDay = (d) => {
+      var day = data.properties.timeseries[d].time.substring(0, 10);
+      console.log(day);
+      // select data where day is equal to the day
+      var dayData = data.properties.timeseries.filter(function(item){
+        return item.time.substring(0, 10) == day;
+      })
+      return dayData;
+    }
+    
+    // Get the next (hours) icons and put all into a array
+    var weatherIconTop = (d) => {
+      var arr = [];
+      for(var i = 0; i < separateDay(d).length; i++){
+        // var next1 = separateDay(d)[i].data.next_1_hours.summary.symbol_code;
+        var next6 = separateDay(d)[i].data.next_6_hours.summary.symbol_code;
+        var next12 = separateDay(d)[i].data.next_12_hours.summary.symbol_code;
+
+        arr.push(next6, next12);
+        console.log(arr);
+        return [next6, next12];
+      }
+    }
+    console.log(weatherIconTop(13));
 
     $(document).ready(function(){
         // Current weather
@@ -107,12 +139,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         // Display next hour windspeed
         $("#windNextHour").html("Vindhastigheten neste time: " + wind(3) + " m/s");
 
-        // Get weatherIcon for put/set day
-        // 1 has data for the weather 1 hour ago, so using it's icon as current icon will match the weather outside.
-        var weatherIcon = (d) => {
-          var icon = data.properties.timeseries[d].data.next_1_hours.summary.symbol_code;
-          return icon;
-        }
+
 
         // Set path to weather icon
         var svgPathCurrent = "../svg/" + weatherIcon(1) + ".svg";
