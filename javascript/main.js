@@ -152,10 +152,10 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
             }, {
               date: 'I morgen ' + data.properties.timeseries[17].time.substring(9, 10) + '. Mai',
               maxMin: maxMin(dataTomorrow)[0] + "° / " + maxMin(dataTomorrow)[1] + "°",
-              windMax: windDate(dataTomorrow) + "° m/s",
+              windMax: windDate(dataTomorrow) + " m/s",
               weatherIcon: "<img src='" + svgPathTomorrow + "' height='50' width='50'></img>"
             }]
           })
-
+d
     });
 });
