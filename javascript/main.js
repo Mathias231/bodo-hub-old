@@ -1,6 +1,6 @@
 $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&lon=14.405&altitude=11", function(data){
     // Console log all data
-    console.log(data);
+    // console.log(data);
 
     // All data comes from the JSON object
     // The current data is the second (2) element in the object properties: timeseries: 2
@@ -10,6 +10,8 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     var dataCurrent = 2
     // 17 = First data/entry for tomorrow's data (aka tomorrow)
     var dataTomorrow = 17
+    // 42 = Day after tomorrow
+    var dataDayAfterTomorrow = 42
 
 
     // Data last updated
@@ -91,7 +93,6 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     // A fucntion that seperates data from the current day and the next day
     var separateDay = (d) => {
       var day = data.properties.timeseries[d].time.substring(0, 10);
-      console.log(day);
       // select data where day is equal to the day
       var dayData = data.properties.timeseries.filter(function(item){
         return item.time.substring(0, 10) == day;
@@ -101,18 +102,14 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     
     // Get the next (hours) icons and put all into a array
     var weatherIconTop = (d) => {
-      var arr = [];
       for(var i = 0; i < separateDay(d).length; i++){
         // var next1 = separateDay(d)[i].data.next_1_hours.summary.symbol_code;
         var next6 = separateDay(d)[i].data.next_6_hours.summary.symbol_code;
         var next12 = separateDay(d)[i].data.next_12_hours.summary.symbol_code;
-
-        arr.push(next6, next12);
-        console.log(arr);
         return [next6, next12];
       }
     }
-    console.log(weatherIconTop(13));
+    
 
     $(document).ready(function(){
         // Current weather
@@ -151,9 +148,23 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         // Set weather icon
         $("#weatherIconNextHour").attr("src", svgPathNextHour);
 
-        // Set path to weather icon
-        var svgPathTomorrow = "../svg/" + weatherIcon(17) + ".svg";
+
+        // weatherIconToday
+        var weatherIconToday = weatherIconTop(2);
+        var svgPathToday1 = "../svg/" + weatherIconToday[0] + ".svg";
+        var svgPathToday2 = "../svg/" + weatherIconToday[1] + ".svg";
+
+        // weatherIconNextDay
+        var weatherIconTomorrow = weatherIconTop(17);
+        var svgPathTomorrow1 = "../svg/" + weatherIconTomorrow[0] + ".svg";
+        var svgPathTomorrow2 = "../svg/" + weatherIconTomorrow[1] + ".svg";
         
+        // weatherIconAfterTomorrow
+        var weatherIconAfterTomorrow = weatherIconTop(42);
+        var svgPathAfterTomorrow1 = "../svg/" + weatherIconAfterTomorrow[0] + ".svg";
+        var svgPathAfterTomorrow2 = "../svg/" + weatherIconAfterTomorrow[1] + ".svg";
+
+
 
         $('#table').bootstrapTable({
             locale: 'en-US',
@@ -168,18 +179,23 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
               title: 'Vindstyrke'
             }, {
                 field: 'weatherIcon',
-                title: 'Vær ikon'
+                title: 'Været utover dagen'
               }],
             data: [{
               date: 'I dag ' + data.properties.timeseries[2].time.substring(9, 10) + '. Mai',
               maxMin: maxMin(dataCurrent)[0] + "° / " + maxMin(dataCurrent)[1] + "°",
               windMax: windDate(dataCurrent) + " m/s",
-              weatherIcon: "<img src='" + svgPathCurrent + "' height='50' width='50'></img>"
+              weatherIcon: "<img src='" + svgPathToday1 + "' height='50' width='50'></img><img src='" + svgPathToday2 + "' height='50' width='50'></img>"
             }, {
               date: 'I morgen ' + data.properties.timeseries[17].time.substring(9, 10) + '. Mai',
               maxMin: maxMin(dataTomorrow)[0] + "° / " + maxMin(dataTomorrow)[1] + "°",
               windMax: windDate(dataTomorrow) + " m/s",
-              weatherIcon: "<img src='" + svgPathTomorrow + "' height='50' width='50'></img>"
+              weatherIcon: "<img src='" + svgPathTomorrow1 + "' height='50' width='50'></img><img src='" + svgPathTomorrow2 + "' height='50' width='50'></img>"
+            }, {
+              date: 'I overmorgen ' + data.properties.timeseries[42].time.substring(9, 10) + '. Mai',
+              maxMin: maxMin(42)[0] + "° / " + maxMin(42)[1] + "°",
+              windMax: windDate(42) + " m/s",
+              weatherIcon: "<img src='" + svgPathAfterTomorrow1 + "' height='50' width='50'></img><img src='" + svgPathAfterTomorrow2 + "' height='50' width='50'></img>"
             }]
           })
     });
