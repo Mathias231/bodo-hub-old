@@ -114,12 +114,6 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
           return icon;
         }
 
-
-        var today = new Date();
-
-        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-        console.log(date);
-
         // Set path to weather icon
         var svgPathCurrent = "../svg/" + weatherIcon(1) + ".svg";
         // Set weather icon
