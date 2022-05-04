@@ -113,7 +113,12 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
           var icon = data.properties.timeseries[d].data.next_1_hours.summary.symbol_code;
           return icon;
         }
-    
+
+
+        var today = new Date();
+
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        console.log(date);
 
         // Set path to weather icon
         var svgPathCurrent = "../svg/" + weatherIcon(1) + ".svg";
@@ -156,6 +161,5 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
               weatherIcon: "<img src='" + svgPathTomorrow + "' height='50' width='50'></img>"
             }]
           })
-d
     });
 });
