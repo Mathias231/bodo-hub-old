@@ -1,6 +1,6 @@
 $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&lon=14.405&altitude=11", function(data){
     // Console log all data
-    // console.log(data);
+    console.log(data);
 
     // All data comes from the JSON object
     // The current data is the second (2) element in the object properties: timeseries: 2
@@ -12,12 +12,10 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     var dataTomorrow = 17
     // 42 = Day after tomorrow
     var dataDayAfterTomorrow = 42
-    
-    var date = new Date();
-    var day = date.getDay();
-    var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    var dayName = dayNames[day];
-
+    // 53 = Day after tomorrow
+    var dataDayAfterTomorrow2 = 54
+    // 59 = Day after tomorrow
+    var dataDayAfterTomorrow3 = 59
 
     // Data last updated
     var lastUpdated = data.properties.timeseries[2].time;
@@ -29,20 +27,25 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     $("#lastUpdated2").append(lastUpdatedClockTime);
     // console.log(lastUpdatedClockTime);
 
+
     // Loop through the data and make an object with the data
     var allTime = [];
     // Loop through all timeseries
     for(var i = 0; i < data.properties.timeseries.length; i++){
         // Get the time
-        var time = data.properties.timeseries[i].time;
         var yyymmdd = data.properties.timeseries[i].time.substring(0, 10);
+        var year = data.properties.timeseries[i].time.substring(0, 4);
+        var month = data.properties.timeseries[i].time.substring(5, 7);
+        var day = data.properties.timeseries[i].time.substring(8, 10);
+        var dato = new Date(year, month-1, day);
+        var readable_date = dato.toDateString();
         // Get the temperature
         var temperature = data.properties.timeseries[i].data.instant.details.air_temperature;
         var wind = data.properties.timeseries[i].data.instant.details.wind_speed;
         
         // Create an object with the time and temperature
         var timeOjbect = {
-            time: time,
+            dato: readable_date,
             yyymmdd: yyymmdd,
             temperature: temperature,
             wind: wind
@@ -52,6 +55,14 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     }
     console.log(allTime);
 
+    var getDate = (d) => {
+        var day = allTime[d].dato.substring(0, 3);
+        var dateNumber = allTime[d].dato.substring(8, 10);
+        var month = allTime[d].dato.substring(4, 7);
+        return [day, dateNumber, month];
+    }
+      
+    console.log(getDate(2));
     // Get all data for put/set day
     var dataDate = (d) => {
         if(allTime[d].yyymmdd == allTime[d].yyymmdd){
@@ -170,20 +181,30 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
                 title: 'Været utover dagen'
               }],
             data: [{
-              date: 'I dag ' + data.properties.timeseries[2].time.substring(9, 10) + '. Mai',
+              date: 'I dag ' + getDate(dataCurrent)[1] + '. ' + getDate(dataCurrent)[2],
               maxMin: maxMin(dataCurrent)[0] + "° / " + maxMin(dataCurrent)[1] + "°",
               windMax: windDate(dataCurrent) + " m/s",
               weatherIcon: "<img src='../svg/" + weatherIconTop(dataCurrent)[0] + ".svg' height='50' width='50'></img><img src='../svg/" + weatherIconTop(dataCurrent)[1] + ".svg' height='50' width='50'></img>"
             }, {
-              date: 'I morgen ' + data.properties.timeseries[17].time.substring(9, 10) + '. Mai',
+              date: getDate(dataTomorrow)[0] + ' ' + getDate(dataTomorrow)[1] + '. ' + getDate(dataTomorrow)[2],
               maxMin: maxMin(dataTomorrow)[0] + "° / " + maxMin(dataTomorrow)[1] + "°",
               windMax: windDate(dataTomorrow) + " m/s",
               weatherIcon: "<img src='../svg/" + weatherIconTop(dataTomorrow)[0] + ".svg' height='50' width='50'></img><img src='../svg/" + weatherIconTop(dataTomorrow)[1] + ".svg' height='50' width='50'></img>"
             }, {
-              date: 'I overmorgen ' + data.properties.timeseries[42].time.substring(9, 10) + '. Mai',
+              date: getDate(dataDayAfterTomorrow)[0] + ' ' + getDate(dataDayAfterTomorrow)[1] + '. ' + getDate(dataDayAfterTomorrow)[2],
               maxMin: maxMin(42)[0] + "° / " + maxMin(42)[1] + "°",
               windMax: windDate(42) + " m/s",
               weatherIcon: "<img src='../svg/" + weatherIconTop(dataDayAfterTomorrow)[0] + ".svg' height='50' width='50'></img><img src='../svg/" + weatherIconTop(dataDayAfterTomorrow)[1] + ".svg' height='50' width='50'></img>"
+            }, {
+              date: getDate(dataDayAfterTomorrow2)[0] + ' ' + getDate(dataDayAfterTomorrow2)[1] + '. ' + getDate(dataDayAfterTomorrow2)[2],
+              maxMin: maxMin(dataDayAfterTomorrow2)[0] + "° / " + maxMin(dataDayAfterTomorrow2)[1] + "°",
+              windMax: windDate(dataDayAfterTomorrow2) + " m/s",
+              weatherIcon: "<img src='../svg/" + weatherIconTop(dataDayAfterTomorrow2)[0] + ".svg' height='50' width='50'></img><img src='../svg/" + weatherIconTop(dataDayAfterTomorrow2)[1] + ".svg' height='50' width='50'></img>"
+            }, {
+              date: getDate(dataDayAfterTomorrow3)[0] + ' ' + getDate(dataDayAfterTomorrow3)[1] + '. ' + getDate(dataDayAfterTomorrow3)[2],
+              maxMin: maxMin(dataDayAfterTomorrow3)[0] + "° / " + maxMin(dataDayAfterTomorrow3)[1] + "°",
+              windMax: windDate(dataDayAfterTomorrow3) + " m/s",
+              weatherIcon: "<img src='../svg/" + weatherIconTop(dataDayAfterTomorrow3)[0] + ".svg' height='50' width='50'></img><img src='../svg/" + weatherIconTop(dataDayAfterTomorrow3)[1] + ".svg' height='50' width='50'></img>"
             }]
           })
     });
