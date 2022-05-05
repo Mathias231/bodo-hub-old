@@ -13,6 +13,8 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     // 42 = Day after tomorrow
     var dataDayAfterTomorrow = 42
 
+    var date = new Date();
+    console.log(date);
 
     // Data last updated
     var lastUpdated = data.properties.timeseries[2].time;
@@ -43,9 +45,9 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
             wind: wind
         };
         // Push the object to the arrayd
-        allTime.push(timeOjbect);
+        // allTime.push(timeOjbect);
     }
-     // console.log(allTime);
+     console.log(allTime);
 
     // Get all data for put/set day
     var dataDate = (d) => {
@@ -168,17 +170,17 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
               date: 'I dag ' + data.properties.timeseries[2].time.substring(9, 10) + '. Mai',
               maxMin: maxMin(dataCurrent)[0] + "° / " + maxMin(dataCurrent)[1] + "°",
               windMax: windDate(dataCurrent) + " m/s",
-              weatherIcon: "<img src='../svg/" + weatherIconTop(2)[0] + ".svg' height='50' width='50'></img><img src='../svg/" + weatherIconTop(2)[1] + ".svg' height='50' width='50'></img>"
+              weatherIcon: "<img src='../svg/" + weatherIconTop(dataCurrent)[0] + ".svg' height='50' width='50'></img><img src='../svg/" + weatherIconTop(dataCurrent)[1] + ".svg' height='50' width='50'></img>"
             }, {
               date: 'I morgen ' + data.properties.timeseries[17].time.substring(9, 10) + '. Mai',
               maxMin: maxMin(dataTomorrow)[0] + "° / " + maxMin(dataTomorrow)[1] + "°",
               windMax: windDate(dataTomorrow) + " m/s",
-              weatherIcon: "<img src='../svg/" + weatherIconTop(17)[0] + ".svg' height='50' width='50'></img><img src='../svg/" + weatherIconTop(17)[1] + ".svg' height='50' width='50'></img>"
+              weatherIcon: "<img src='../svg/" + weatherIconTop(dataTomorrow)[0] + ".svg' height='50' width='50'></img><img src='../svg/" + weatherIconTop(dataTomorrow)[1] + ".svg' height='50' width='50'></img>"
             }, {
               date: 'I overmorgen ' + data.properties.timeseries[42].time.substring(9, 10) + '. Mai',
               maxMin: maxMin(42)[0] + "° / " + maxMin(42)[1] + "°",
               windMax: windDate(42) + " m/s",
-              weatherIcon: "<img src='../svg/" + weatherIconTop(42)[0] + ".svg' height='50' width='50'></img><img src='../svg/" + weatherIconTop(42)[1] + ".svg' height='50' width='50'></img>"
+              weatherIcon: "<img src='../svg/" + weatherIconTop(dataDayAfterTomorrow)[0] + ".svg' height='50' width='50'></img><img src='../svg/" + weatherIconTop(dataDayAfterTomorrow)[1] + ".svg' height='50' width='50'></img>"
             }]
           })
     });
