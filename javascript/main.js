@@ -1,6 +1,6 @@
 $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&lon=14.405&altitude=11", function(data){
     // Console log all data
-    console.log(data);
+    // console.log(data);
 
     // All data comes from the JSON object
     // The current data is the second (2) element in the object properties: timeseries: 2
@@ -53,8 +53,9 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         // Push the object to the arrayd
         allTime.push(timeOjbect);
     }
-    console.log(allTime);
+    // console.log(allTime);
 
+    // Get the date as number and make it readable
     var getDate = (d) => {
         var day = allTime[d].dato.substring(0, 3);
         var dateNumber = allTime[d].dato.substring(8, 10);
@@ -62,7 +63,6 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         return [day, dateNumber, month];
     }
       
-    console.log(getDate(2));
     // Get all data for put/set day
     var dataDate = (d) => {
         if(allTime[d].yyymmdd == allTime[d].yyymmdd){
