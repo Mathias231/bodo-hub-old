@@ -12,9 +12,12 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     var dataTomorrow = 17
     // 42 = Day after tomorrow
     var dataDayAfterTomorrow = 42
-
+    
     var date = new Date();
-    console.log(date);
+    var day = date.getDay();
+    var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var dayName = dayNames[day];
+
 
     // Data last updated
     var lastUpdated = data.properties.timeseries[2].time;
@@ -47,7 +50,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
         // Push the object to the arrayd
         allTime.push(timeOjbect);
     }
-    // console.log(allTime);
+    console.log(allTime);
 
     // Get all data for put/set day
     var dataDate = (d) => {
