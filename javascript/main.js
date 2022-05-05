@@ -64,7 +64,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
       var result = data.properties.timeseries[d].data.instant.details.air_temperature.toFixed(0);
       return result;
     }
-
+    
     var wind = (d) => {
       var result = data.properties.timeseries[d].data.instant.details.wind_speed.toFixed(1);
       return result;
