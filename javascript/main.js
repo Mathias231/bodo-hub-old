@@ -45,9 +45,9 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
             wind: wind
         };
         // Push the object to the arrayd
-        // allTime.push(timeOjbect);
+        allTime.push(timeOjbect);
     }
-     console.log(allTime);
+    // console.log(allTime);
 
     // Get all data for put/set day
     var dataDate = (d) => {
