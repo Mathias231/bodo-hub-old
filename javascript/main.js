@@ -1,6 +1,6 @@
 $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&lon=14.405&altitude=11", function(data){
     // Console log all data
-    // console.log(data);
+   console.log(data);
 
     // All data comes from the JSON object
     // The current data is the second (2) element in the object properties: timeseries: 2
@@ -16,6 +16,12 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
     var dataDayAfterTomorrow2 = 54
     // 59 = Day after tomorrow
     var dataDayAfterTomorrow3 = 59
+    // 62 = Day after tomorrow
+    var dataDayAfterTomorrow4 = 62
+    // 66 = Day after tomorrow
+    var dataDayAfterTomorrow5 = 66
+    // 71 = Day after tomorrow
+    var dataDayAfterTomorrow6 = 71
 
     // Data last updated
     var lastUpdated = data.properties.timeseries[2].time;
@@ -205,6 +211,21 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
               maxMin: maxMin(dataDayAfterTomorrow3)[0] + "° / " + maxMin(dataDayAfterTomorrow3)[1] + "°",
               windMax: windDate(dataDayAfterTomorrow3) + " m/s",
               weatherIcon: "<img src='../svg/" + weatherIconTop(dataDayAfterTomorrow3)[0] + ".svg' height='50' width='50'></img><img src='../svg/" + weatherIconTop(dataDayAfterTomorrow3)[1] + ".svg' height='50' width='50'></img>"
+            }, {
+              date: getDate(dataDayAfterTomorrow4)[0] + ' ' + getDate(dataDayAfterTomorrow4)[1] + '. ' + getDate(dataDayAfterTomorrow4)[2],
+              maxMin: maxMin(dataDayAfterTomorrow4)[0] + "° / " + maxMin(dataDayAfterTomorrow4)[1] + "°",
+              windMax: windDate(dataDayAfterTomorrow4) + " m/s",
+              weatherIcon: "<img src='../svg/" + weatherIconTop(dataDayAfterTomorrow4)[0] + ".svg' height='50' width='50'></img><img src='../svg/" + weatherIconTop(dataDayAfterTomorrow4)[1] + ".svg' height='50' width='50'></img>"
+            }, {
+              date: getDate(dataDayAfterTomorrow5)[0] + ' ' + getDate(dataDayAfterTomorrow5)[1] + '. ' + getDate(dataDayAfterTomorrow5)[2],
+              maxMin: maxMin(dataDayAfterTomorrow5)[0] + "° / " + maxMin(dataDayAfterTomorrow5)[1] + "°",
+              windMax: windDate(dataDayAfterTomorrow5) + " m/s",
+              weatherIcon: "<img src='../svg/" + weatherIconTop(dataDayAfterTomorrow5)[0] + ".svg' height='50' width='50'></img><img src='../svg/" + weatherIconTop(dataDayAfterTomorrow5)[1] + ".svg' height='50' width='50'></img>"
+            }, {
+              date: getDate(dataDayAfterTomorrow6)[0] + ' ' + getDate(dataDayAfterTomorrow6)[1] + '. ' + getDate(dataDayAfterTomorrow6)[2],
+              maxMin: maxMin(dataDayAfterTomorrow6)[0] + "° / " + maxMin(dataDayAfterTomorrow6)[1] + "°",
+              windMax: windDate(dataDayAfterTomorrow6) + " m/s",
+              weatherIcon: "<img src='../svg/" + weatherIconTop(dataDayAfterTomorrow6)[0] + ".svg' height='50' width='50'></img><img src='../svg/" + weatherIconTop(dataDayAfterTomorrow6)[1] + ".svg' height='50' width='50'></img>"
             }]
           })
     });
