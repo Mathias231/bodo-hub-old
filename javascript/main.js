@@ -121,7 +121,7 @@ $.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&
       })
       return dayData;
     }
-    
+
     // Get the next (hours) icons and put all into a array
     var weatherIconTop = (d) => {
       for(var i = 0; i < separateDay(d).length; i++){
