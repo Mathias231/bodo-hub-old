@@ -1,3 +1,3 @@
-$.getJSON("https://flydata.avinor.no/XmlFeed.asp?TimeFrom=1&TimeTo=7&airport=BOO", function(data){
+$.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&lon=14.405&altitude=11", function(data){
     console.log(data);
 });
