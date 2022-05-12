@@ -1,3 +1,14 @@
-$.getJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=67.28&lon=14.405&altitude=11", function(data){
-    console.log(data);
+const settings = {
+    method: 'GET',
+    mode: 'no-cors',
+    cache: 'default',
+  };
+  
+  
+const link = ('https://flydata.avinor.no/XmlFeed.asp?TimeFrom=1&TimeTo=7&airport=BOO');
+  
+fetch(link, settings)
+.then((response) => {
+    return response.text();
+    // ...
 });
